@@ -101,3 +101,17 @@ tasks:
           wget {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/init/megalinter.yml;
         else /bin/true;
         fi
+
+  download:node:
+    internal: true
+    dir: ./common
+    deps:
+      - download:common:local
+    status:
+      - ls node.yml
+    cmds:
+      - |
+        if [[ '{{.TASK_INIT_NODE}}' == 'true' ]] ; then
+          wget {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/init/node.yml;
+        else /bin/true;
+        fi
