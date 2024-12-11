@@ -25,4 +25,6 @@ tasks:
     status:
       - pipx --version
     cmds:
-      - sudo pip3 install pipx --break-system-packages
+      - |
+        echo "Installing pipx..."
+        sudo pip3 -q install pipx --break-system-packages

@@ -13,4 +13,6 @@ tasks:
     deps:
       - python:ensure:pipx
     cmds:
-      - pipx install commitizen
+      - |
+        echo "Installing commitizen..."
+        pipx -q install commitizen
