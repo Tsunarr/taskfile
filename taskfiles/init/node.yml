@@ -4,6 +4,7 @@ version: "3"
 tasks:
   ensure:npm:
     internal: true
+    silent: true
     status:
       - npm --version
     cmds:

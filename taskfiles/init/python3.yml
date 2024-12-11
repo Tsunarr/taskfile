@@ -4,6 +4,7 @@ version: "3"
 tasks:
   ensure:pip:
     internal: true
+    silent: true
     status:
       - pip3 --version
     cmds:
@@ -18,6 +19,7 @@ tasks:
         fi
   ensure:pipx:
     internal: true
+    silent: true
     deps:
       - ensure:pip
     status:
