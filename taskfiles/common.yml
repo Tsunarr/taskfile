@@ -15,6 +15,13 @@ tasks:
       - task: download:init:bruno
       - task: download:megalinter
 
+  download:common:local:
+    internal: true
+    dir: .config/taskfiles
+    status:
+      - ls common
+    cmds:
+      - mkdir -p common
 
   download:local-init:
     internal: true
