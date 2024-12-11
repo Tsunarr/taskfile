@@ -2,7 +2,7 @@
 version: "3"
 
 includes:
-  python: python.yml
+  python: python3.yml
 
 tasks:
   ensure:

@@ -12,6 +12,7 @@ tasks:
       - task: download:init:python3
       - task: download:init:commitizen
       - task: download:init:bruno
+      - task: download:init:node
       - task: download:megalinter
 
   download:common:local:
@@ -98,15 +99,15 @@ tasks:
     cmds:
       - |
         if [[ '{{.TASK_INIT_MEGALINTER}}' == 'true' ]] ; then
-          wget {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/init/megalinter.yml;
+          wget {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/megalinter.yml;
         else /bin/true;
         fi
 
-  download:node:
+  download:init:node:
     internal: true
-    dir: ./common
+    dir: ./common/init
     deps:
-      - download:common:local
+      - download:local-init
     status:
       - ls node.yml
     cmds:
