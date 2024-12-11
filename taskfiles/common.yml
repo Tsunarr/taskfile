@@ -23,7 +23,7 @@ tasks:
     cmds:
       - mkdir -p common
 
-  download:local-init:
+  download:common:local-init:
     internal: true
     dir: .config/taskfiles/common
     deps:
