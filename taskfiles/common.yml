@@ -60,7 +60,7 @@ tasks:
         vars:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: git.yml
-          DOWNLOAD_ENABLED: {{.TASK_INIT_GIT}}
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_GIT}}"
 
   download:init:python3:
     internal: true
@@ -69,7 +69,7 @@ tasks:
         vars:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: python3.yml
-          DOWNLOAD_ENABLED: {{.TASK_INIT_PYTHON3}}
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_PYTHON3}}"
 
   download:init:commitizen:
     internal: true
@@ -78,7 +78,7 @@ tasks:
         vars:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: commitizen.yml
-          DOWNLOAD_ENABLED: {{.TASK_INIT_COMMITIZEN}}
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_COMMITIZEN}}"
 
   download:init:bruno:
     internal: true
@@ -87,7 +87,7 @@ tasks:
         vars:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: bruno.yml
-          DOWNLOAD_ENABLED: {{.TASK_INIT_BRUNO}}
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_BRUNO}}"
 
   download:init:node:
     internal: true
@@ -96,7 +96,7 @@ tasks:
         vars:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: node.yml
-          DOWNLOAD_ENABLED: {{.TASK_INIT_NODE}}
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_NODE}}"
 
   download:megalinter:
     internal: true
@@ -105,7 +105,7 @@ tasks:
         vars:
           DOWNLOAD_DIR:
           DOWNLOAD_FILE: megalinter.yml
-          DOWNLOAD_ENABLED: {{.TASK_USE_MEGALINTER}}
+          DOWNLOAD_ENABLED: "{{.TASK_USE_MEGALINTER}}"
 
   download:bruno:
     internal: true
@@ -114,4 +114,4 @@ tasks:
         vars:
           DOWNLOAD_DIR:
           DOWNLOAD_FILE: bruno.yml
-          DOWNLOAD_ENABLED: {{.TASK_USE_BRUNO}}
+          DOWNLOAD_ENABLED: "{{.TASK_USE_BRUNO}}"
