@@ -14,6 +14,7 @@ tasks:
       - task: download:init:bruno
       - task: download:init:node
       - task: download:megalinter
+      - task: download:bruno
 
   download:common:local:
     internal: true
@@ -46,7 +47,7 @@ tasks:
       - pwd
     cmds:
       - |
-        if [[ '{{.TASK_INIT_GIT}}' == 'true' ]] ; then
+        if [[ '{{.DOWNLOAD_ENABLED}}' == 'true' ]] ; then
           echo "Downloading {{.DOWNLOAD_FILE}}";
           wget -q {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/{{.DOWNLOAD_DIR}}{{.DOWNLOAD_FILE}};
         else /bin/true;
@@ -59,6 +60,7 @@ tasks:
         vars:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: git.yml
+          DOWNLOAD_ENABLED: {{.TASK_INIT_GIT}}
 
   download:init:python3:
     internal: true
@@ -67,6 +69,7 @@ tasks:
         vars:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: python3.yml
+          DOWNLOAD_ENABLED: {{.TASK_INIT_PYTHON3}}
 
   download:init:commitizen:
     internal: true
@@ -75,6 +78,7 @@ tasks:
         vars:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: commitizen.yml
+          DOWNLOAD_ENABLED: {{.TASK_INIT_COMMITIZEN}}
 
   download:init:bruno:
     internal: true
@@ -83,14 +87,7 @@ tasks:
         vars:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: bruno.yml
-
-  download:megalinter:
-    internal: true
-    cmds:
-      - task: download:core
-        vars:
-          DOWNLOAD_DIR:
-          DOWNLOAD_FILE: megalinter.yml
+          DOWNLOAD_ENABLED: {{.TASK_INIT_BRUNO}}
 
   download:init:node:
     internal: true
@@ -99,3 +96,22 @@ tasks:
         vars:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: node.yml
+          DOWNLOAD_ENABLED: {{.TASK_INIT_NODE}}
+
+  download:megalinter:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: megalinter.yml
+          DOWNLOAD_ENABLED: {{.TASK_USE_MEGALINTER}}
+
+  download:bruno:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: bruno.yml
+          DOWNLOAD_ENABLED: {{.TASK_USE_BRUNO}}
