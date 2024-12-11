@@ -48,7 +48,7 @@ tasks:
     cmds:
       - |
         if [[ '{{.DOWNLOAD_ENABLED}}' == 'true' ]] ; then
-          echo "Downloading {{.DOWNLOAD_FILE}}";
+          echo "Downloading {{.DOWNLOAD_DIR}}{{.DOWNLOAD_FILE}}";
           wget -q {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/{{.DOWNLOAD_DIR}}{{.DOWNLOAD_FILE}};
         else /bin/true;
         fi
