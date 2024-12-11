@@ -17,7 +17,7 @@ tasks:
 
   download:common:local:
     internal: true
-    dir: .config/taskfiles
+    dir: .
     status:
       - ls common
     cmds:
@@ -25,7 +25,7 @@ tasks:
 
   download:local-init:
     internal: true
-    dir: .config/taskfiles/common
+    dir: ./common
     deps:
       - download:common:local
     status:
@@ -38,7 +38,7 @@ tasks:
     requires:
       vars:
         - TASKFILE_INIT_GIT
-    dir: .config/taskfiles/common/init
+    dir: ./common/init
     deps:
       - download:local-init
     status:
@@ -51,7 +51,7 @@ tasks:
     requires:
       vars:
         - TASKFILE_INIT_PYTHON3
-    dir: .config/taskfiles/common/init
+    dir: ./common/init
     deps:
       - download:local-init
     status:
@@ -64,7 +64,7 @@ tasks:
     requires:
       vars:
         - TASKFILE_INIT_COMMITIZEN
-    dir: .config/taskfiles/common/init
+    dir: ./common/init
     deps:
       - download:local-init
     status:
@@ -77,7 +77,7 @@ tasks:
     requires:
       vars:
         - TASKFILE_INIT_BRUNO
-    dir: .config/taskfiles/common/init
+    dir: ./common/init
     deps:
       - download:local-init
     status:
@@ -90,7 +90,7 @@ tasks:
     requires:
       vars:
         - TASKFILE_INIT_MEGALINTER
-    dir: .config/taskfiles/common
+    dir: ./common
     deps:
       - download:common:local
     status:
