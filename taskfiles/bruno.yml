@@ -1,0 +1,9 @@
+---
+version: "3"
+
+tasks:
+  test:
+    silent: true
+    cmds:
+      - bru run --env "{{.BRUNO_ENV}}"
+    dir: {{.BRUNO_DIR}}
