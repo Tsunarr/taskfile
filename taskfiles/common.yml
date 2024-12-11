@@ -17,6 +17,7 @@ tasks:
 
   download:common:local:
     internal: true
+    silent: true
     dir: .
     status:
       - ls common
@@ -25,6 +26,7 @@ tasks:
 
   download:local-init:
     internal: true
+    silent: true
     dir: ./common
     deps:
       - download:common:local
@@ -33,86 +35,67 @@ tasks:
     cmds:
       - mkdir -p init
 
-  download:init:git:
+  download:core:
     internal: true
-    dir: ./common/init
+    silent: true
+    dir: ./common/{{.DOWNLOAD_DIR}}
     deps:
       - download:local-init
     status:
-      - ls git.yml
+      - ls {{.DOWNLOAD_FILE}}
+      - pwd
     cmds:
       - |
         if [[ '{{.TASK_INIT_GIT}}' == 'true' ]] ; then
-          wget {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/init/git.yml;
+          echo "Downloading {{.DOWNLOAD_FILE}}";
+          wget -q {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/{{.DOWNLOAD_DIR}}{{.DOWNLOAD_FILE}};
         else /bin/true;
         fi
+
+  download:init:git:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: git.yml
 
   download:init:python3:
     internal: true
-    dir: ./common/init
-    deps:
-      - download:local-init
-    status:
-      - ls python3.yml
     cmds:
-      - |
-        if [[ '{{.TASK_INIT_PYTHON3}}' == 'true' ]] ; then
-          wget {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/init/python3.yml;
-        else /bin/true;
-        fi
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: python3.yml
 
   download:init:commitizen:
     internal: true
-    dir: ./common/init
-    deps:
-      - download:local-init
-    status:
-      - ls commitizen.yml
     cmds:
-      - |
-        if [[ '{{.TASK_INIT_COMMITIZEN}}' == 'true' ]] ; then
-          wget {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/init/commitizen.yml;
-        else /bin/true;
-        fi
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: commitizen.yml
 
   download:init:bruno:
     internal: true
-    dir: ./common/init
-    deps:
-      - download:local-init
-    status:
-      - ls bruno.yml
     cmds:
-      - |
-        if [[ '{{.TASK_INIT_BRUNO}}' == 'true' ]] ; then
-          wget {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/init/bruno.yml;
-        else /bin/true;
-        fi
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: bruno.yml
 
   download:megalinter:
     internal: true
-    dir: ./common
-    deps:
-      - download:common:local
-    status:
-      - ls megalinter.yml
     cmds:
-      - |
-        if [[ '{{.TASK_INIT_MEGALINTER}}' == 'true' ]] ; then
-          wget {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/megalinter.yml;
-        else /bin/true;
-        fi
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: megalinter.yml
 
   download:init:node:
     internal: true
-    dir: ./common/init
-    deps:
-      - download:local-init
-    status:
-      - ls node.yml
     cmds:
-      - |
-        if [[ '{{.TASK_INIT_NODE}}' == 'true' ]] ; then
-          wget {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/init/node.yml;
-        else /bin/true;
-        fi
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: node.yml
