@@ -6,7 +6,6 @@ vars:
 tasks:
   init:
     silent: true
-    internal: true
     cmds:
       # download common taskfile dependencies
       - task: download:init:git
