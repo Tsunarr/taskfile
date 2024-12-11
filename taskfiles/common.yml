@@ -23,7 +23,7 @@ tasks:
     cmds:
       - mkdir -p common
 
-  download:common:local-init:
+  download:local-init:
     internal: true
     dir: .config/taskfiles/common
     deps:
@@ -40,7 +40,7 @@ tasks:
         - TASKFILE_INIT_GIT
     dir: .config/taskfiles/common/init
     deps:
-      - download:common:local-init
+      - download:local-init
     status:
       - ls git.yml
     cmds:
@@ -53,7 +53,7 @@ tasks:
         - TASKFILE_INIT_PYTHON3
     dir: .config/taskfiles/common/init
     deps:
-      - download:common:local-init
+      - download:local-init
     status:
       - ls python3.yml
     cmds:
@@ -66,7 +66,7 @@ tasks:
         - TASKFILE_INIT_COMMITIZEN
     dir: .config/taskfiles/common/init
     deps:
-      - download:common:local-init
+      - download:local-init
     status:
       - ls commitizen.yml
     cmds:
@@ -79,7 +79,7 @@ tasks:
         - TASKFILE_INIT_BRUNO
     dir: .config/taskfiles/common/init
     deps:
-      - download:common:local-init
+      - download:local-init
     status:
       - ls bruno.yml
     cmds:
