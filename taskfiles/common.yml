@@ -9,90 +9,83 @@ tasks:
     silent: true
     cmds:
       # download common taskfile dependencies
-      - task: download:common:init:git
-      - task: download:common:init:python3
-      - task: download:common:init:commitizen
-      - task: download:common:init:bruno
-      - task: download:common:megalinter
+      - task: download:init:git
+      - task: download:init:python3
+      - task: download:init:commitizen
+      - task: download:init:bruno
+      - task: download:megalinter
 
-  download:common:local:
-    internal: true
-    dir: .config/taskfiles
-    status:
-      - ls common
-    cmds:
-      - mkdir -p common
 
-  download:common:local-init:
+  download:local-init:
     internal: true
     dir: .config/taskfiles/common
     deps:
-      - download:common:local
+      - download:local
     status:
       - ls init
     cmds:
       - mkdir -p init
 
-  download:common:init:git:
+  download:init:git:
     internal: true
     requires:
       vars:
         - TASKFILE_INIT_GIT
     dir: .config/taskfiles/common/init
     deps:
-      - download:common:local-init
+      - download:local-init
     status:
       - ls git.yml
     cmds:
       - wget {{.TASKFILE_REPO_URL}}/{{.TASKFILE_REPO_TAG}}/taskfiles/init/git.yml
 
-  download:common:init:python3:
+  download:init:python3:
     internal: true
     requires:
       vars:
         - TASKFILE_INIT_PYTHON3
     dir: .config/taskfiles/common/init
     deps:
-      - download:common:local-init
+      - download:local-init
     status:
       - ls python3.yml
     cmds:
       - wget {{.TASKFILE_REPO_URL}}/{{.TASKFILE_REPO_TAG}}/taskfiles/init/python3.yml
 
-  download:common:init:commitizen:
+  download:init:commitizen:
     internal: true
     requires:
       vars:
         - TASKFILE_INIT_COMMITIZEN
     dir: .config/taskfiles/common/init
     deps:
-      - download:common:local-init
+      - download:local-init
     status:
       - ls commitizen.yml
     cmds:
       - wget {{.TASKFILE_REPO_URL}}/{{.TASKFILE_REPO_TAG}}/taskfiles/init/commitizen.yml
 
-  download:common:init:bruno:
+  download:init:bruno:
     internal: true
     requires:
       vars:
         - TASKFILE_INIT_BRUNO
     dir: .config/taskfiles/common/init
     deps:
-      - download:common:local-init
+      - download:local-init
     status:
       - ls bruno.yml
     cmds:
       - wget {{.TASKFILE_REPO_URL}}/{{.TASKFILE_REPO_TAG}}/taskfiles/init/bruno.yml
 
-  download:common:megalinter:
+  download:megalinter:
     internal: true
     requires:
       vars:
         - TASKFILE_INIT_MEGALINTER
     dir: .config/taskfiles/common
     deps:
-      - download:common:local
+      - download:local
     status:
       - ls megalinter.yml
     cmds:
