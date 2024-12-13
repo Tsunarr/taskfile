@@ -15,6 +15,7 @@ tasks:
       - task: download:init:node
       - task: download:megalinter
       - task: download:bruno
+      - task: download:commitizen
 
   download:common:local:
     internal: true
