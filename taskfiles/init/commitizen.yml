@@ -8,6 +8,7 @@ tasks:
   ensure:
     internal: true
     silent: true
+    run: once
     status:
       - cz version
     deps:
