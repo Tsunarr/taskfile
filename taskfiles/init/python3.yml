@@ -36,8 +36,20 @@ tasks:
     run: once
     deps:
       - ensure:pip
+    status:
+      - poetry --version
     cmds:
       - |
         echo "Installing poetry..."
         pip install poetry
+  ensure:poetry:dependencies:
+    internal: true
+    silent: true
+    run: once
+    deps:
+      - ensure:pip
+    cmds:
+      - |
+        echo "Installing poetry dependencies..."
+        poetry install
 
