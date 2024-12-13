@@ -1,0 +1,27 @@
+---
+
+tasks:
+  bump:only:
+    silent: true
+    vars:
+      - CZ_OPTIONS: ""
+    cmds:
+      - cz bump
+  bump:push:
+    silent: true
+    cmds:
+      - task: bump:only
+      - git push
+      - git push --tags
+  bump:test:
+    silent: true
+    cmds:
+      - task: bump:only
+        vars:
+          - CZ_OPTIONS: "--dry-run"
+  bump:alpha:
+    silent: true
+    cmds:
+      - task: bump:push
+        vars:
+          - CZ_OPTIONS: "--prerelease alpha"

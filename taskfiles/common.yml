@@ -115,3 +115,12 @@ tasks:
           DOWNLOAD_DIR:
           DOWNLOAD_FILE: bruno.yml
           DOWNLOAD_ENABLED: "{{.TASK_USE_BRUNO}}"
+
+  download:commitizen:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: commitizen.yml
+          DOWNLOAD_ENABLED: "{{.TASK_USE_COMMITIZEN}}"
