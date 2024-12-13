@@ -21,6 +21,7 @@ tasks:
   ensure:pipx:
     internal: true
     silent: true
+    run: once
     deps:
       - ensure:pip
     status:
@@ -29,3 +30,14 @@ tasks:
       - |
         echo "Installing pipx..."
         sudo pip3 -q install pipx --break-system-packages
+  ensure:poetry:
+    internal: true
+    silent: true
+    run: once
+    deps:
+      - ensure:pip
+    cmds:
+      - |
+        echo "Installing poetry..."
+        pip install poetry
+
