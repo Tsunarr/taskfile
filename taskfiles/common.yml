@@ -13,6 +13,7 @@ tasks:
       - task: download:init:commitizen
       - task: download:init:bruno
       - task: download:init:node
+      - task: download:init:docker
       - task: download:megalinter
       - task: download:bruno
       - task: download:commitizen
@@ -98,6 +99,15 @@ tasks:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: node.yml
           DOWNLOAD_ENABLED: "{{.TASK_INIT_NODE}}"
+
+  download:init:docker:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: docker.yml
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_DOCKER}}"
 
   download:megalinter:
     internal: true
