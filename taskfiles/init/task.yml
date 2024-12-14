@@ -2,6 +2,8 @@
 # Task is already available but sometimes called go-task
 # This task is used to make sure task is callable as task and not go-task
 
+version: "3"
+
 tasks:
   ensure:
     internal: true
