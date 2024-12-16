@@ -18,6 +18,13 @@ tasks:
     vars:
       DOCKER_IMAGE_NAME: "{{.DOCKER_IMAGE_NAME}}"
       DOCKER_IMAGE_TAG: "{{.DOCKER_IMAGE_TAG}}"
-      DOCKER_MOUNTS: "{{.DOCKER_MOUNTS | default \"-v ./config:/app/config\"}}"
+      DOCKER_MOUNTS: '{{.DOCKER_MOUNTS | default "-v ./config:/app/config"}}'
+      DOCKER_RUN_OPTIONS: '{{.DOCKER_RUN_OPTIONS | default ""}}'
+      DOCKER_RUN_CMD: '{{.DOCKER_RUN_CMD | default ""}}'
     cmds:
-      - docker run --rm {{.DOCKER_MOUNTS}} --name {{.DOCKER_IMAGE_NAME}}_test {{.DOCKER_IMAGE_NAME}}:{{.DOCKER_IMAGE_TAG}}
+      - |
+        if [[ -n "${LOCALWORKSPACE}" ]]; then
+          # mode devcontainer ajout d'un raccordement au network du devcontainer
+          DOCKER_NETWORK="--network "$(docker inspect $HOSTNAME | jq -r '.[0].NetworkSettings.Networks | keys[0]')
+        fi
+        docker run ${DOCKER_NETWORK} {{.DOCKER_RUN_OPTIONS}} --rm {{.DOCKER_MOUNTS}} --name {{.DOCKER_IMAGE_NAME}}_test {{.DOCKER_IMAGE_NAME}}:{{.DOCKER_IMAGE_TAG}} {{.DOCKER_RUN_CMD}}
