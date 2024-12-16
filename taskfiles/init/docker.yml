@@ -18,3 +18,19 @@ tasks:
           echo "No package manager found"
           exit 1
         fi
+  socket:sync:
+    # this task is for Docker in Docker when the docker groupid is not the same as the host
+    silent: true
+    internal: true
+    vars:
+      DOCKER_GROUPID:
+        sh: "getent group docker | cut -d: -f3"
+      DOCKER_SOCKET_GID:
+        sh: "stat -c '%g' /var/run/docker.sock"
+    status:
+      - |
+        echo "Current Docker group ID: {{.DOCKER_GROUPID}}"
+        echo "Docker socket group ID: {{.DOCKER_SOCKET_GID}}"
+        test "{{.DOCKER_GROUPID}}" = "{{.DOCKER_SOCKET_GID}}"
+    cmds:
+      - sudo groupmod -g {{.DOCKER_SOCKET_GID}} docker
