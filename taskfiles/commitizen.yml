@@ -5,7 +5,7 @@ tasks:
   bump:only:
     silent: true
     vars:
-      CZ_OPTIONS: ""
+      CZ_OPTIONS: '{{.CZ_OPTIONS | default ""}}'
     cmds:
       - cz bump
   bump:push:

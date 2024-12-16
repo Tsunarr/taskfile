@@ -20,4 +20,4 @@ tasks:
       DOCKER_IMAGE_TAG: "{{.DOCKER_IMAGE_TAG}}"
       DOCKER_MOUNTS: "{{.DOCKER_MOUNTS | default \"-v ./config:/app/config\"}}"
     cmds:
-      - docker run --rm -v {{.DOCKER_MOUNTS}} --name pyconarr_test {{.DOCKER_IMAGE_NAME}}:{{.DOCKER_IMAGE_TAG}}
+      - docker run --rm {{.DOCKER_MOUNTS}} --name {{.DOCKER_IMAGE_NAME}}_test {{.DOCKER_IMAGE_NAME}}:{{.DOCKER_IMAGE_TAG}}
