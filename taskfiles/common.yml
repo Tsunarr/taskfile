@@ -19,6 +19,7 @@ tasks:
       - task: download:bruno
       - task: download:commitizen
       - task: download:docker
+      - task: download:poetry
 
   download:common:local:
     internal: true
@@ -155,3 +156,12 @@ tasks:
           DOWNLOAD_DIR:
           DOWNLOAD_FILE: docker.yml
           DOWNLOAD_ENABLED: "{{.TASK_USE_DOCKER}}"
+
+  download:poetry:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: poetry.yml
+          DOWNLOAD_ENABLED: "{{.TASK_USE_POETRY}}"
