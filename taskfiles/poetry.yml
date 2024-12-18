@@ -4,32 +4,27 @@ version: "3"
 tasks:
   install:
     silent: true
-    internal: true
     cmds:
       - poetry install
   build:
     silent: true
-    internal: true
     cmds:
       - poetry build {{.POETRY_BUILD_ARGS}}
     vars:
       POETRY_BUILD_ARGS: '{{.POETRY_BUILD_ARGS | default ""}}'
   test:
     silent: true
-    internal: true
     cmds:
       - poetry run pytest {{.POETRY_PYTEST_OPTIONS}}
     vars:
       POETRY_PYTEST_OPTIONS: '{{.POETRY_PYTEST_OPTIONS | default ""}}'
   coverage:
     silent: true
-    internal: true
     cmds:
       - poetry run coverage xml
       - poetry run coverage lcov
   run:
     silent: true
-    internal: true
     cmds:
       - poetry run uvicorn --app-dir {{.POETRY_APP_DIR}} {{.POETRY_MODULE}} --reload --log-config={{.POETRY_LOG_CONFIG}}
     vars:
