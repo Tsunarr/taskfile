@@ -15,6 +15,7 @@ tasks:
       - task: download:init:node
       - task: download:init:docker
       - task: download:init:task
+      - task: download:init:angular
       - task: download:megalinter
       - task: download:bruno
       - task: download:commitizen
@@ -120,6 +121,15 @@ tasks:
           DOWNLOAD_DIR: init/
           DOWNLOAD_FILE: task.yml
           DOWNLOAD_ENABLED: "{{.TASK_INIT_TASK}}"
+  
+  download:init:angular:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: angular.yml
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_ANGULAR}}"
 
   download:megalinter:
     internal: true
