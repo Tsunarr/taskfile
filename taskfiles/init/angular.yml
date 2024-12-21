@@ -15,3 +15,4 @@ tasks:
       - ng version --help
     cmds:
       - sudo npm install -g @angular/cli
+      - echo "source <(ng completion script)" >> ~/.bashrc
