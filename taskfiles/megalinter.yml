@@ -7,5 +7,7 @@ tasks:
       - "test"
     silent: true
     cmds:
-      - docker run --pull=always --rm -v "${LOCALWORKSPACE}:$(pwd)" -w
+      - docker run --env HTTP_PROXY=${HTTP_PROXY}
+        --env HTTPS_PROXY=${HTTPS_PROXY}
+        --pull=always --rm -v "${LOCALWORKSPACE}:$(pwd)" -w
         "$(pwd)" -e DEFAULT_WORKSPACE="$(pwd)" oxsecurity/megalinter:v8
