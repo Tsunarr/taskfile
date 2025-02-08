@@ -1,0 +1,11 @@
+version: "3"
+
+tasks:
+  install:
+    internal: true
+    silent: true
+    run: once
+    status:
+      - ls node_modules
+    cmds:
+      - npm install

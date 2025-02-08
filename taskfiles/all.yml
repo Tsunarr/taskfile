@@ -1,0 +1,31 @@
+version: "3"
+
+includes:
+  angular:
+    taskfile: ./angular.yml
+    optional: true
+    dir: ../..
+  bruno:
+    taskfile: ./bruno.yml
+    optional: true
+    dir: ../..
+  commitizen:
+    taskfile: ./commitizen.yml
+    optional: true
+    dir: ../..
+  docker:
+    taskfile: ./docker.yml
+    optional: true
+    dir: ../..
+  megalinter:
+    taskfile: ./megalinter.yml
+    optional: true
+    dir: ../..
+  node:
+    taskfile: ./node.yml
+    optional: true
+    dir: ../..
+  poetry:
+    taskfile: ./poetry.yml
+    optional: true
+    dir: ../..
