@@ -21,6 +21,7 @@ tasks:
       - task: download:commitizen
       - task: download:docker
       - task: download:poetry
+      - task: download:tools
 
   download:common:local:
     internal: true
@@ -175,3 +176,11 @@ tasks:
           DOWNLOAD_DIR:
           DOWNLOAD_FILE: poetry.yml
           DOWNLOAD_ENABLED: "{{.TASK_USE_POETRY}}"
+  download:tools:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: tools.yml
+          DOWNLOAD_ENABLED: "true" # always download tools.yml
