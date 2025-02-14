@@ -12,6 +12,12 @@ tasks:
       - poetry build {{.POETRY_BUILD_ARGS}}
     vars:
       POETRY_BUILD_ARGS: '{{.POETRY_BUILD_ARGS | default ""}}'
+  publish:
+    silent: true
+    cmds:
+      - poetry config repositories.{{.POETRY_PUBLISH_REPOSITORY_NAME}} {{.POETRY_PUBLISH_REPOSITORY_URL}}
+      - poetry publish -r {{.POETRY_PUBLISH_REPOSITORY_NAME}} -u "{{.POETRY_PUBLISH_USER}}" -p "{{.POETRY_PUBLISH_PASSWORD}}"
+
   test:
     silent: true
     cmds:
