@@ -1,0 +1,55 @@
+---
+version: "3"
+
+tasks:
+  ensure:pip:
+    internal: true
+    silent: true
+    run: once
+    status:
+      - pip3 --version
+    cmds:
+      - |
+        if which apt; then
+          sudo apt-get install python3-pip -y
+        elif which apk; then
+          sudo apk add py3-pip
+        else
+          echo "No package manager found"
+          exit 1
+        fi
+  ensure:pipx:
+    internal: true
+    silent: true
+    run: once
+    deps:
+      - ensure:pip
+    status:
+      - pipx --version
+    cmds:
+      - |
+        echo "Installing pipx..."
+        sudo pip3 -q install pipx --break-system-packages
+  ensure:poetry:
+    internal: true
+    silent: true
+    run: once
+    deps:
+      - ensure:pip
+    status:
+      - poetry --version
+    cmds:
+      - |
+        echo "Installing poetry..."
+        pip install poetry
+  ensure:poetry:dependencies:
+    internal: true
+    silent: true
+    run: once
+    deps:
+      - ensure:pip
+    cmds:
+      - |
+        echo "Installing poetry dependencies..."
+        poetry install
+

@@ -1,0 +1,187 @@
+---
+version: "3"
+
+vars:
+  TASK_REPO_URL: "https://raw.githubusercontent.com/Tsunarr/taskfile/refs/heads"
+tasks:
+  init:
+    silent: true
+    cmds:
+      # download common taskfile dependencies
+      - task: download:init:git
+      - task: download:init:python3
+      - task: download:init:commitizen
+      - task: download:init:bruno
+      - task: download:init:node
+      - task: download:init:docker
+      - task: download:init:task
+      - task: download:init:angular
+      - task: download:megalinter
+      - task: download:bruno
+      - task: download:commitizen
+      - task: download:docker
+      - task: download:poetry
+      - task: download:tools
+
+  download:common:local:
+    internal: true
+    silent: true
+    dir: .
+    status:
+      - ls common
+    cmds:
+      - mkdir -p common
+
+  download:local-init:
+    internal: true
+    silent: true
+    dir: ./common
+    deps:
+      - download:common:local
+    status:
+      - ls init
+    cmds:
+      - mkdir -p init
+
+  download:core:
+    internal: true
+    silent: true
+    dir: ./common/{{.DOWNLOAD_DIR}}
+    deps:
+      - download:local-init
+    status:
+      - ls {{.DOWNLOAD_FILE}}
+      - pwd
+    cmds:
+      - |
+        if [[ '{{.DOWNLOAD_ENABLED}}' == 'true' ]] ; then
+          echo "Downloading {{.DOWNLOAD_DIR}}{{.DOWNLOAD_FILE}}";
+          wget -q {{.TASK_REPO_URL}}/{{.TASK_REPO_TAG}}/taskfiles/{{.DOWNLOAD_DIR}}{{.DOWNLOAD_FILE}};
+        else /bin/true;
+        fi
+
+  download:init:git:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: git.yml
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_GIT}}"
+
+  download:init:python3:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: python3.yml
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_PYTHON3}}"
+
+  download:init:commitizen:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: commitizen.yml
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_COMMITIZEN}}"
+
+  download:init:bruno:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: bruno.yml
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_BRUNO}}"
+
+  download:init:node:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: node.yml
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_NODE}}"
+
+  download:init:docker:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: docker.yml
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_DOCKER}}"
+
+  download:init:task:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: task.yml
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_TASK}}"
+
+  download:init:angular:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR: init/
+          DOWNLOAD_FILE: angular.yml
+          DOWNLOAD_ENABLED: "{{.TASK_INIT_ANGULAR}}"
+
+  download:megalinter:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: megalinter.yml
+          DOWNLOAD_ENABLED: "{{.TASK_USE_MEGALINTER}}"
+
+  download:bruno:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: bruno.yml
+          DOWNLOAD_ENABLED: "{{.TASK_USE_BRUNO}}"
+
+  download:commitizen:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: commitizen.yml
+          DOWNLOAD_ENABLED: "{{.TASK_USE_COMMITIZEN}}"
+
+  download:docker:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: docker.yml
+          DOWNLOAD_ENABLED: "{{.TASK_USE_DOCKER}}"
+
+  download:poetry:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: poetry.yml
+          DOWNLOAD_ENABLED: "{{.TASK_USE_POETRY}}"
+
+  download:tools:
+    internal: true
+    cmds:
+      - task: download:core
+        vars:
+          DOWNLOAD_DIR:
+          DOWNLOAD_FILE: tools.yml
+          DOWNLOAD_ENABLED: "true" # always download tools.yml

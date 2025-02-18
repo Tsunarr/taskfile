@@ -1,0 +1,21 @@
+---
+# Task is already available but sometimes called go-task
+# This task is used to make sure task is callable as task and not go-task
+
+version: "3"
+
+tasks:
+  ensure:
+    internal: true
+    silent: true
+    run: once
+    status:
+      - task --version
+    cmds:
+      - |
+        if [[ -f /usr/bin/go-task ]]; then
+          sudo ln -nfs /usr/bin/go-task /usr/bin/task
+        else
+          echo "Task location not found"
+          exit 1
+        fi

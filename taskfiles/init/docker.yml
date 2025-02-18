@@ -1,0 +1,41 @@
+---
+version: "3"
+
+tasks:
+  ensure:
+    internal: true
+    silent: true
+    run: once
+    status:
+      - docker --version
+    cmds:
+      - |
+        if which apt; then
+          sudo apt-get install docker -y
+        elif which apk; then
+          sudo apk add docker
+        else
+          echo "No package manager found"
+          exit 1
+        fi
+  socket:sync:
+    # this task is for Docker in Docker when the docker groupid is not the same as the host
+    silent: true
+    internal: true
+    vars:
+      DOCKER_GROUPID:
+        sh: "getent group docker | cut -d: -f3"
+      DOCKER_SOCKET_GID:
+        sh: "stat -c '%g' /var/run/docker.sock"
+      USER_IN_DOCKER_GROUP:
+        sh: "groups ${USER} | grep -q docker && echo true || echo false"
+    status:
+      - |
+        echo "Current Docker group ID: {{.DOCKER_GROUPID}}"
+        echo "Docker socket group ID: {{.DOCKER_SOCKET_GID}}"
+        test "{{.DOCKER_GROUPID}}" = "{{.DOCKER_SOCKET_GID}}" && 
+        test "{{.USER_IN_DOCKER_GROUP}}" = "true"
+    cmds:
+      - sudo gpasswd -d ${USER} docker || true
+      - sudo groupmod -g {{.DOCKER_SOCKET_GID}} docker
+      - sudo gpasswd -a ${USER} docker

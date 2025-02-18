@@ -1,0 +1,41 @@
+---
+version: "3"
+
+tasks:
+  install:
+    silent: true
+    cmds:
+      - poetry install
+  build:
+    silent: true
+    cmds:
+      - poetry build {{.POETRY_BUILD_ARGS}}
+    vars:
+      POETRY_BUILD_ARGS: '{{.POETRY_BUILD_ARGS | default ""}}'
+  publish:
+    silent: true
+    cmds:
+      - poetry config repositories.{{.POETRY_PUBLISH_REPOSITORY_NAME}} {{.POETRY_PUBLISH_REPOSITORY_URL}}
+      - poetry publish -r {{.POETRY_PUBLISH_REPOSITORY_NAME}} -u "{{.POETRY_PUBLISH_USER}}" -p "{{.POETRY_PUBLISH_PASSWORD}}"
+
+  test:
+    silent: true
+    cmds:
+      - poetry run pytest {{.POETRY_PYTEST_OPTIONS}}
+    vars:
+      POETRY_PYTEST_OPTIONS: '{{.POETRY_PYTEST_OPTIONS | default ""}}'
+  coverage:
+    silent: true
+    cmds:
+      - poetry run coverage run -m pytest
+      - poetry run coverage xml
+      - poetry run coverage lcov
+      - poetry run coverage json -o /dev/stdout -q | jq .totals
+  run:
+    silent: true
+    cmds:
+      - poetry run uvicorn --app-dir {{.POETRY_APP_DIR}} {{.POETRY_MODULE}} --reload --log-config={{.POETRY_LOG_CONFIG}}
+    vars:
+      POETRY_APP_DIR: '{{.POETRY_APP_DIR | default "."}}'
+      POETRY_MODULE: '{{.POETRY_MODULE | default "main:app"}}'
+      POETRY_LOG_CONFIG: '{{.POETRY_LOG_CONFIG | default "config/log.yaml"}}'
