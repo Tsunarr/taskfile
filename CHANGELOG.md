@@ -1,3 +1,9 @@
+## 0.1.2 (2025-02-18)
+
+### Fix
+
+- add pytest args on coverage -- re-run test
+
 ## 0.1.1 (2025-02-18)
 
 ### Fix
