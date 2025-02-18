@@ -27,10 +27,12 @@ tasks:
   coverage:
     silent: true
     cmds:
-      - poetry run coverage run -m pytest
+      - poetry run coverage run -m pytest {{.POETRY_PYTEST_OPTIONS}}
       - poetry run coverage xml
       - poetry run coverage lcov
       - poetry run coverage json -o /dev/stdout -q | jq .totals
+    vars:
+      POETRY_PYTEST_OPTIONS: '{{.POETRY_PYTEST_OPTIONS | default ""}}'
   run:
     silent: true
     cmds:
