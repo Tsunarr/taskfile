@@ -16,4 +16,4 @@ tasks:
     cmds:
       - |
         echo "Installing commitizen..."
-        pipx -q install commitizen
+        pipx install commitizen
