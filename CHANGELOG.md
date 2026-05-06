@@ -1,3 +1,10 @@
+## 0.1.3 (2026-05-06)
+
+### Fix
+
+- **deps**: update actions/checkout action to v6 (#5)
+- remove -q argument from pipx (not recognized anymore)
+
 ## 0.1.2 (2025-02-18)
 
 ### Fix
